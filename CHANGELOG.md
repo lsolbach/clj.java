@@ -3,6 +3,12 @@ ChangeLog
 
 Version 0.8.1
 -------------
+* moved file namespace from clj.base to clj.java because of the JVM dependency
+* added zip namespace with an unzip function
+* added type hints for the return values in beans
+* added type hints for the return values in reflection
+* added method-name function to reflection
+* added type hints and additional coercions in type-conversion
 * rewrote codec functions because javax.xml.bind was removed from JDK in Java 11
 
 Version 0.8.0
