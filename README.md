@@ -8,6 +8,7 @@ clj.java contains the following namespaces
 * beaninfo - functions to set Java bean properties via property descriptors
 * beans- functions for method-based reflective access to Java bean style objects
 * codec- functions to encode/decode to Hex and Base64
+* file - functions for working with files, search paths and file search
 * i18n - functions for internationalization via Java resource bundles
 * message-digest - functions to create message digests
 * net - functions for network access
@@ -15,8 +16,10 @@ clj.java contains the following namespaces
 * reflection - functions for reflective introspection of Java classes
 * system - functions for interacting with java.lang.System
 * type-conversion - Java type coercion/conversion functions
+* zip - functions for handling zip files (unzipping for now)
 
-clj.java uses clj.base.
+
+clj.java uses clj.base 0.9.0.
 
 Usage
 -----

@@ -1,6 +1,6 @@
-(defproject org.soulspace.clj/clj.java "0.8.1-SNAPSHOT"
+(defproject org.soulspace.clj/clj.java "0.9.0"
   :description "The clj.java library contains various functions for Clojure/Java integration"
-  :url "https://github.com/lsolbach/CljBase"
+  :url "https://github.com/soulspace-org/clj.java"
   :license {:name "Eclipse Public License"
             :url  "http://www.eclipse.org/legal/epl-v10.html"}
 

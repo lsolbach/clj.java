@@ -1,7 +1,7 @@
 ChangeLog
 =========
 
-Version 0.8.1
+Version 0.9.0
 -------------
 * moved file namespace from clj.base to clj.java because of the JVM dependency
 * added zip namespace with an unzip function
