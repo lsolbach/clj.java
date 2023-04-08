@@ -16,8 +16,6 @@
 ;; Functions for the coercion of Java types
 ;;
 
-;(set! *warn-on-reflection* true)
-
 (defmulti coerce
   "Coerce clojure data types to java data types"
   (fn [dest-class obj] [dest-class (class obj)]))
