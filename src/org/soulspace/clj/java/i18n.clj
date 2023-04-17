@@ -10,7 +10,8 @@
 ;;;;   You must not remove this notice, or any other, from this software.
 ;;;;
 
-(ns org.soulspace.clj.java.i18n)
+(ns org.soulspace.clj.java.i18n
+  "Functions for internationalization via Java resource bundles.")
 
 ;;
 ;; Functions for internationalization via Java resource bundles
@@ -28,5 +29,7 @@
   ([bundle str-key]
    (.getString bundle str-key)))
 
+(comment
 ; TODO
-(defn switch-locale [])
+  (defn switch-locale [])
+  )
