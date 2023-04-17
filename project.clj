@@ -1,4 +1,4 @@
-(defproject org.soulspace.clj/clj.java "0.9.0"
+(defproject org.soulspace.clj/clj.java "0.9.1-SNAPSHOT"
   :description "The clj.java library contains various functions for Clojure/Java integration"
   :url "https://github.com/soulspace-org/clj.java"
   :license {:name "Eclipse Public License"
@@ -10,7 +10,8 @@
   :lein-tools-deps/config {:config-files [:install :user :project]}
 
   :test-paths ["test"]
-  :profiles {:dev {:dependencies [[djblue/portal "0.37.1"]]
+  :profiles {:dev {:dependencies [[djblue/portal "0.37.1"]
+                                  [criterium "0.4.6"]]
                    :global-vars {*warn-on-reflection* true}}}
 
   :scm {:name "git" :url "https://github.com/soulspace-org/clj.java"}
