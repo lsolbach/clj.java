@@ -19,13 +19,8 @@ clj.java contains the following namespaces
 * zip - functions for handling zip files (unzipping for now)
 
 
-clj.java uses clj.base 0.9.0.
-
-Usage
------
-Add the dependency:
-
 [![Clojars Project](https://img.shields.io/clojars/v/org.soulspace.clj/clj.java.svg)](https://clojars.org/org.soulspace.clj/clj.java)
+[![cljdoc badge](https://cljdoc.org/badge/org.soulspace.clj/clj.java)](https://cljdoc.org/d/org.soulspace.clj/clj.java)
 
 Copyright
 ---------

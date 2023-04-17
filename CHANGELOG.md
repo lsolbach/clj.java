@@ -8,6 +8,8 @@ Version 0.9.1
 * added docstrings to namespaces
 * added more type hints
 * added certificate retrieval for SSL connections
+* updated clj.base dependency
+* removed type conversions from chars to numbers that did not make sense
 
 Version 0.9.0
 -------------

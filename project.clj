@@ -1,4 +1,4 @@
-(defproject org.soulspace.clj/clj.java "0.9.1-SNAPSHOT"
+(defproject org.soulspace.clj/clj.java "0.9.1"
   :description "The clj.java library contains various functions for Clojure/Java integration"
   :url "https://github.com/soulspace-org/clj.java"
   :license {:name "Eclipse Public License"
