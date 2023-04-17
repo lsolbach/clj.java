@@ -11,6 +11,7 @@ target/
 **/pom.xml
 
 ## VS Code
+.vscode/
 .calva/
 .lsp/
 .cpcache/
@@ -23,3 +24,4 @@ bin/
 .project
 .settings/
 hs_err_pid*.log
+
