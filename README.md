@@ -24,7 +24,7 @@ clj.java contains the following namespaces
 
 Copyright
 ---------
-© 2011-2021 Ludger Solbach
+© 2011-2023 Ludger Solbach
 
 License
 -------
