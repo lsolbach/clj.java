@@ -10,11 +10,11 @@
 ;;;;   You must not remove this notice, or any other, from this software.
 ;;;;
 
-(ns org.soulspace.clj.java.test.codec
+(ns org.soulspace.clj.java.codec-test
   (:require [clojure.test :refer :all]
             [org.soulspace.clj.java.codec :refer :all]))
 
-(def s1 "Hello World!")
+(def ^String s1 "Hello World!")
 
 (deftest base64-test
   (is (= s1 (String. (base64->bytes (bytes->base64 (.getBytes s1)))))))

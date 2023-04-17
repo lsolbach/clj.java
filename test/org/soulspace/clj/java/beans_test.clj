@@ -10,16 +10,15 @@
 ;;;;   You must not remove this notice, or any other, from this software.
 ;;;;
 
-(ns org.soulspace.clj.java.test.beans
+(ns org.soulspace.clj.java.beans-test
   (:require [clojure.test :refer :all]
             [org.soulspace.clj.java.beans :as beans]))
 
-(defn method-name [method]
+(defn method-name [^java.lang.reflect.Method method]
   (.getName method))
 
 (deftest get-method-test
   (is (= (beans/getter-method javax.swing.JFrame "menuBar") nil)))
-
 
 (deftest set-method-test
   (is (= (method-name (beans/setter-method javax.swing.JFrame "menuBar")) "setMenuBar")))
