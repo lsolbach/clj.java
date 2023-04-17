@@ -11,18 +11,22 @@
 ;;;;
 
 (ns org.soulspace.clj.java.net
-  (:require [clojure.java.io :as io]))
+  "Functions for network access."
+  (:require [clojure.java.io :as io])
+  (:import [java.security.cert X509Certificate]
+           [java.net HttpURLConnection URL]
+           [javax.net.ssl SSLContext SSLSession SSLSocketFactory SSLSocket
+            TrustManager X509TrustManager]))
 
-;;
-;; Functions for network access
-;;
-
+;;;;
+;;;; Functions for network access
+;;;;
 (defn url-content
   "Read the content from an URL ."
   ([url]
     (slurp url))
-  ([url timeout]
-    (let [conn (.openConnection (io/as-url url))]
+  ([url ^Integer timeout]
+    (let [^HttpURLConnection conn (.openConnection (io/as-url url))]
       (.setConnectTimeout conn timeout)
       (.connect conn)
       (slurp (.getInputStream conn)))))
@@ -31,10 +35,32 @@
   "Test an URL, returns true if content is available."
   ([url]
    (test-url url 500))
-  ([url timeout]
+  ([url ^Integer timeout]
    (try
-     (let [conn (.openConnection url)]
+     (let [^HttpURLConnection conn (.openConnection (io/as-url url))]
        (.setConnectTimeout conn timeout)
+       ;(.setReadTimeout conn timeout)
        (.connect conn)
-       (contains? #{200} (.getResponseCode conn)))
-     (catch Exception _ false))))
+       (< (.getResponseCode conn) 400))
+     (catch Exception e 
+       false))))
+
+(defn get-certificates
+  "Returns the SSL certificates for a given host and port."
+  [^String host ^Integer port]
+  (let [tm (proxy [X509TrustManager] []
+             (getAcceptedIssuers [] nil)
+             (checkClientTrusted [certs authType] nil)
+             (checkServerTrusted [certs authType] nil))
+        sc (SSLContext/getInstance "SSL")]
+    (.init sc nil (into-array TrustManager [tm]) nil)
+    (let [sf (.getSocketFactory sc)]
+      (with-open [^SSLSocket socket (.createSocket sf host port)]
+        (.startHandshake socket)
+        (.getPeerCertificates (.getSession socket))))))
+
+(defn print-certificates
+  "Prints the SSL certificates for a given host and port."
+  [^String host ^Integer port]
+  (doseq [cert (get-certificates host port)]
+    (println cert)))
