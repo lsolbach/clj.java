@@ -11,11 +11,12 @@
 ;;;;
 
 (ns org.soulspace.clj.java.properties
+  "Functions for java.util.Properties."
   (:import [java.util Properties]))
 
-;;
-;; 
-;;
+;;;;
+;;;; Functions for java.util.Properties
+;;;;
 
 (defn properties
   "Creates java properties from a map."

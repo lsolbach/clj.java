@@ -11,13 +11,15 @@
 ;;;;
 
 (ns org.soulspace.clj.java.message-digest
+  "Functions to create message digests."
+  (:refer-clojure :exclude [update])
   (:require [clojure.java.io :as io])
   (:import [java.nio.file Files Path Paths]
            [java.security MessageDigest]))
 
-;;
-;; Functions to create message digests
-;;
+;;;;
+;;;; Functions to create message digests
+;;;;
 
 ;; definition copied from clojure.java.io because it's private
 (def ^{:doc "Type object for a Java primitive byte array."
@@ -34,7 +36,9 @@
    :sha-512 "SHA-512"})
 
 ;; Multi method for conversion to byte[]
-(defmulti get-bytes type)
+(defmulti get-bytes
+  "Converts the input to a byte array."
+  type)
 
 (defmethod get-bytes byte-array-type [val] val)
 (defmethod get-bytes String [val]

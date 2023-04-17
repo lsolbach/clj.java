@@ -11,11 +11,12 @@
 ;;;;
 
 (ns org.soulspace.clj.java.system
+  "Functions for interacting with java.lang.System."
   (:require [clojure.string :as str]))
 
-;;
-;; Functions for interacting with java.lang.System
-;;
+;;;;
+;;;; Functions for interacting with java.lang.System
+;;;;
 
 ;;
 ;; Environment vars and system properties

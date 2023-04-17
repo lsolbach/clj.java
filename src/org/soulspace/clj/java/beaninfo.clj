@@ -11,6 +11,7 @@
 ;;;;
 
 (ns org.soulspace.clj.java.beaninfo
+  "Functions to set Java bean properties via property descriptors."
   (:require [org.soulspace.clj.java.type-conversion :as tc])
   (:import [java.beans Introspector]))
 

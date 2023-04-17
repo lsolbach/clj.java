@@ -11,6 +11,7 @@
 ;;;;
 
 (ns org.soulspace.clj.java.reflection
+  "Functions for reflective introspection of Java classes."
   (:refer-clojure :exclude [methods])
   (:require [org.soulspace.clj.core :as c]))
 

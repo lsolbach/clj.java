@@ -11,13 +11,12 @@
 ;;;;
 
 (ns org.soulspace.clj.java.codec
+  "Functions to encode/decode to Hex and Base64."
   (:import [java.util Base64]))
 
-;;
-;; Functions to encode/decode to Hex and Base64
-;;
-
-;(set! *warn-on-reflection* true)
+;;;;
+;;;; Functions to encode/decode to Hex and Base64
+;;;;
 
 (defn bytes->base64
   "Encode the bytes as Base64 string."
@@ -47,7 +46,7 @@
 (defn hex->bytes
   "Parse a hexadecimal string into bytes."
   ^bytes [^String s]
-  (letfn [(hex->byte [c1 c2]
+  (letfn [(hex->byte [^Character c1 ^Character c2]
             (unchecked-byte
               (+ (bit-shift-left (Character/digit c1 16) 4)
                  (Character/digit c2 16))))]

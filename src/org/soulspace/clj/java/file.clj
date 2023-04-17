@@ -11,13 +11,14 @@
 ;;;;
 
 (ns org.soulspace.clj.java.file
+  "Functions for working with files and directories."
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
             [org.soulspace.clj.string :as sstr]))
 
-;;;
-;;; Functions for working with files
-;;;
+;;;;
+;;;; Functions for working with files and directories
+;;;;
 
 ;;
 ;; File predicates
