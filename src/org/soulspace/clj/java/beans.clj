@@ -11,18 +11,22 @@
 ;;;;
 
 (ns org.soulspace.clj.java.beans
+  "Functions for method-based reflective access to Java bean style objects."
   (:refer-clojure :exclude [methods])
   (:require [clojure.string :as str]
+            [clojure.java.io :as io]
             [org.soulspace.clj.string :as sstr]
             [org.soulspace.clj.java.reflection :as r]
             [org.soulspace.clj.java.type-conversion :as tc])
   (:import [java.lang.reflect Method]))
 
-;;
-;; Functions for method-based reflective access to Java bean style objects.
-;;
-;; TODO memoize with core.memoize for performance
-;;
+;;;;
+;;;; Functions for method-based reflective access to Java bean style objects.
+;;;;
+
+;;;
+;;; TODO memoize with core.memoize for performance
+;;;
 
 ;(set! *warn-on-reflection* true)
 
@@ -66,6 +70,10 @@
     ; TODO check against property name
 
 
+;;
+;; Bean method predicates
+;;
+
 (defn setter?
   "Returns true if the given method is a property setter method."
   ([^Method method]
@@ -75,9 +83,27 @@
   ([^Method method property-name]))
     ; TODO check against property name
 
+(defn adder?
+  "Returns true if the given method is a property adder method."
+  ([^Method method]
+   (and
+    (str/starts-with? (r/method-name method) "add")
+    (= 1 (count (r/parameter-types method)))))
+  ([^Method method property-name]))
+    ; TODO check against property name
 
-; TODO (defn adder?)
-; TODO (defn remover?)
+(defn remover?
+  "Returns true if the given method is a property remover method."
+  ([^Method method]
+   (and
+    (str/starts-with? (r/method-name method) "remove")
+    (= 1 (count (r/parameter-types method)))))
+  ([^Method method property-name]))
+    ; TODO check against property name
+
+;;
+;; Bean method functions
+;;
 
 (defn- parameter-type
   "Returns the first parameter type of a method."
@@ -149,6 +175,10 @@
      remover
      (remover-method cl property))))
 
+;;
+;; Bean class predicates
+;;
+
 (defn has-get-method?
   [^Class cl property]
   (getter-method cl property))
@@ -164,6 +194,10 @@
 (defn has-remove-method?
   [^Class cl property]
   (remover-method cl property))
+
+;;
+;; Bean property functions
+;;
 
 (defn get-property
   "Returns the value of this property."
@@ -193,8 +227,12 @@
   [obj property value]
   (if-let [property-remove (remover-method (class obj) property (type value))]
     (let [param-type (first (r/parameter-types property-remove))]
-      (.invoke property-remove obj (into-array [value])))
+      (.invoke property-remove obj (into-array [(tc/coerce param-type value)])))
     (throw (IllegalArgumentException. (str "No compatible remover for property " property " found.")))))
+
+;;
+;; Bean class functions
+;;
 
 (defn set-properties!
   "Sets the properties given in the map to the instance"
@@ -241,3 +279,15 @@
    (init-properties! (create bean-class) set-props))
   ([bean-class set-props add-props]
    (init-properties! (create bean-class) set-props add-props)))
+
+;;;
+;;; XML Bean serialization
+;;;
+
+(defn serialize-xml
+  "Serializes a Java Bean as XML to the "
+  ([bean]
+   (serialize-xml "bean.xml" bean))
+  ([filename bean]
+   (with-open [out (io/output-stream filename)]
+     (.writeObject (java.beans.XMLEncoder. out) bean))))
