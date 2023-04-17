@@ -14,7 +14,8 @@
   "Functions for working with files and directories."
   (:require [clojure.java.io :as io]
             [clojure.string :as str]
-            [org.soulspace.clj.string :as sstr]))
+            [org.soulspace.clj.string :as sstr])
+  (:import [java.io File]))
 
 ;;;;
 ;;;; Functions for working with files and directories
@@ -206,8 +207,9 @@
 (defn create-dir
   "Creates a directory including missing parent directories."
   [file]
-  (when-not (exists? file)
-    (.mkdirs file)))
+  (let [file (io/as-file file)]
+    (when-not (exists? file)
+      (.mkdirs file))))
 
 (defn delete-file
   "Deletes the file."

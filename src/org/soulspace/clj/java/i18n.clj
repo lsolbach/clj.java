@@ -11,22 +11,23 @@
 ;;;;
 
 (ns org.soulspace.clj.java.i18n
-  "Functions for internationalization via Java resource bundles.")
+  "Functions for internationalization via Java resource bundles."
+  (:import [java.util ResourceBundle] ))
 
-;;
-;; Functions for internationalization via Java resource bundles
-;;
+;;;;
+;;;; Functions for internationalization via Java resource bundles
+;;;;
 
 (defn bundle
   "Returns the resource bundle of the name (default name is resources)."
   ([]
-   (java.util.ResourceBundle/getBundle "resources"))
+   (ResourceBundle/getBundle "resources"))
   ([bundle-name]
-   (java.util.ResourceBundle/getBundle bundle-name)))
+   (ResourceBundle/getBundle bundle-name)))
 
 (defn bundle-lookup
   "Looks up the key in the resource bundle and returns the resulting string."
-  ([bundle str-key]
+  ([^ResourceBundle bundle str-key]
    (.getString bundle str-key)))
 
 (comment

@@ -13,7 +13,8 @@
 (ns org.soulspace.clj.java.beaninfo
   "Functions to set Java bean properties via property descriptors."
   (:require [org.soulspace.clj.java.type-conversion :as tc])
-  (:import [java.beans Introspector]))
+  (:import [java.beans Introspector PropertyDescriptor]
+           [java.lang.reflect Method]))
 
 ;;
 ;; Functions to set Java bean properties via property descriptors
@@ -23,18 +24,19 @@
   "Returns the property descriptor for the property with the given name."
   [inst prop-name]
   (first (filter
-           #(= prop-name (.getName %)) 
+           (fn [^PropertyDescriptor pd]
+             (= prop-name (.getName pd))) 
            (.getPropertyDescriptors (Introspector/getBeanInfo (class inst))))))
 
 (defn get-property-class
   "Returns the class of a property by the given property write method."
-  [write-method]
+  [^Method write-method]
   (first (.getParameterTypes write-method)))
 
 (defn set-property!
   "Sets the property on the given instance to value."
   [inst prop value]
-  (let [pd (property-descriptor inst prop)]
+  (let [^PropertyDescriptor pd (property-descriptor inst prop)]
     (if (nil? pd) (throw (IllegalArgumentException. (str "No such property " prop))))
     (let [write-method (.getWriteMethod pd)
           dest-class (get-property-class write-method)]

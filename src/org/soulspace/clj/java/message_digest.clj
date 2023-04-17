@@ -13,7 +13,8 @@
 (ns org.soulspace.clj.java.message-digest
   "Functions to create message digests."
   (:refer-clojure :exclude [update])
-  (:require [clojure.java.io :as io])
+  (:require [clojure.java.io :as io]
+            [org.soulspace.clj.core :as c])
   (:import [java.nio.file Files Path Paths]
            [java.security MessageDigest]))
 
@@ -41,11 +42,11 @@
   type)
 
 (defmethod get-bytes byte-array-type [val] val)
-(defmethod get-bytes String [val]
+(defmethod get-bytes String [^String val]
   (.getBytes val "UTF-8"))
-(defmethod get-bytes java.nio.file.Path [val]
+(defmethod get-bytes java.nio.file.Path [^Path val]
   (Files/readAllBytes val))
-(defmethod get-bytes java.io.File [val]
+(defmethod get-bytes java.io.File [^java.io.File val]
   (Files/readAllBytes (Paths/get (.getAbsolutePath val))))
 
 (defn message-digest
@@ -55,21 +56,21 @@
 
 (defn reset
   "Resets the message digest."
-  [md]
+  [^MessageDigest md]
   (.reset md)
   md)
 
 (defn update
   "Updates the message digest."
-  [md val]
+  [^MessageDigest md ^bytes val]
   (.update md val)
   md)
 
 (defn digest
   "Returns the digest of the message digest."
-  ([md]
+  ([^MessageDigest md]
    (.digest md))
-  ([md val]
+  ([^MessageDigest md ^bytes val]
    (.digest md val)))
 
 (defn get-digest

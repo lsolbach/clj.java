@@ -13,13 +13,13 @@
 (ns org.soulspace.clj.java.zip
   "Functions for handling ZIP files."
   (:require [clojure.java.io :as io])
-  (:import [java.util.zip ZipInputStream]
+  (:import [java.util.zip ZipEntry ZipInputStream]
            [java.io File FileInputStream IOException])) 
             
 (defn new-file
   "Safely generates a new file for the zip entry.
    Throws an exception, if the entry is outside of the destination directory to prevent a Zip Slip vulnerability."
-  [destination-dir entry]
+  ^File [^File destination-dir ^ZipEntry entry]
   (let [dest-file (File. destination-dir (.getName entry))
         dest-dir-path (.getCanonicalPath destination-dir)
         dest-file-path (.getCanonicalPath dest-file)]
@@ -31,12 +31,11 @@
 
 (defn unzip-file
   "Unzips the zip file into the destination path."
-  [zip-file-path destination-path]
+  [^String zip-file-path ^String destination-path]
   (with-open [zip-stream (ZipInputStream. (FileInputStream. zip-file-path))]
     (loop [entry (.getNextEntry zip-stream)]
       (when entry
-        (let [;output-file (io/as-file (str destination-path (File/separator) (.getName entry)))
-              output-file (new-file destination-path entry)
+        (let [output-file (new-file destination-path entry)
               parent-dir (-> output-file .getParentFile)
               _ (when parent-dir (.mkdirs parent-dir))
               _ (if (.isDirectory entry)

@@ -1,6 +1,14 @@
 ChangeLog
 =========
 
+Version 0.9.1
+-------------
+* added XML serialization for beans
+* added additional predicates for beans
+* added docstrings to namespaces
+* added more type hints
+* added certificate retrieval for SSL connections
+
 Version 0.9.0
 -------------
 * moved file namespace from clj.base to clj.java because of the JVM dependency
